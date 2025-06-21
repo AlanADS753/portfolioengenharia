@@ -46,11 +46,11 @@ A arquitetura do sistema foi modelada utilizando os seguintes diagramas UML, con
 
 Representa as funcionalidades do sistema sob a perspectiva do usuário.
 
-![Diagrama de Casos de Uso](docs/diagrams/DiagramaDeCasosDeUso_TaskFlow.drawio.png)
+![Diagrama de Casos de Uso](docs/diagrams/DiagramaUso.png)
 
 
 ### 5.2. Diagrama de Classes
 
 Descreve a estrutura estática do sistema em termos de suas classes, atributos e seus relacionamentos.
 
-![Diagrama de Classes](docs/diagrams/DiagramaDeClasses_TaskFlow.drawio.png)
+![Diagrama de Classes](docs/diagrams/DiagramaClasse.png)
