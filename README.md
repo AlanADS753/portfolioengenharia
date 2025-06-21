@@ -206,3 +206,32 @@ Para executar os testes localmente, certifique-se de ter o pytest instalado (pip
 
 pytest tests/
 
+9. Controle de Qualidade (Integração Contínua com GitHub Actions)
+Este projeto utiliza GitHub Actions para automatizar o processo de controle de qualidade e integração contínua (CI). Isso significa que cada alteração no código é automaticamente verificada para garantir que não introduza novos problemas.
+
+9.1. Como Funciona
+Configuração: O pipeline de CI é definido no arquivo .github/workflows/ci.yml. Este arquivo descreve uma série de passos que são executados em um ambiente isolado.
+
+Gatilho (Trigger): O workflow é acionado automaticamente em duas situações principais:
+
+Quando há um push (envio de código) para o branch main.
+
+Quando um pull request é aberto com destino ao branch main.
+
+Execução:
+
+Uma máquina virtual (nesse caso, Linux com ubuntu-latest) é provisionada.
+
+O código do repositório é baixado.
+
+O ambiente Python é configurado.
+
+As dependências do projeto (listadas em requirements.txt) e o pytest são instalados.
+
+Os testes automatizados (pytest tests/) são executados.
+
+Feedback: O resultado da execução (sucesso ou falha) é exibido diretamente na aba "Actions" do seu repositório no GitHub, fornecendo feedback rápido sobre a qualidade das novas modificações.
+
+9.2. Verificando as Execuções
+Você pode monitorar o status das execuções do CI/CD visitando a aba Actions do GitHub do seu repositório.
+

@@ -1,0 +1,32 @@
+name: CI/CD Pipeline 
+
+on:
+  push:
+    branches:
+      - main # O workflow será acionado em cada push para o branch 'main'
+  pull_request:
+    branches:
+      - main # O workflow também será acionado em cada Pull Request para o branch 'main'
+
+jobs: # Define os "trabalhos" (jobs) que serão executados neste workflow
+  build-and-test: 
+    runs-on: ubuntu-latest # Define o sistema operacional em que o job será executado
+
+    steps: # Sequência de passos a serem executados dentro do job
+    - name: Checkout code # Passo 1: Baixa o código do seu repositório
+      uses: actions/checkout@v4 # Usa uma action pré-definida do GitHub para fazer o checkout
+
+    - name: Set up Python # Passo 2: Configura o ambiente Python
+      uses: actions/setup-python@v5 # Usa uma action pré-definida para configurar o Python
+      with:
+        python-version: '3.9' # Define a versão do Python a ser usada 
+
+    - name: Install dependencies # Passo 3: Instala as dependências do projeto
+      run: | # O comando 'run' permite executar comandos de shell
+        python -m pip install --upgrade pip # Atualiza o pip
+        pip install -r requirements.txt # Instala as dependências listadas no seu requirements.txt
+        pip install pytest # Garante que o pytest esteja instalado, caso não esteja no requirements.txt
+
+    - name: Run tests # Passo 4: Executa os testes Pytest
+      run: |
+        pytest tests/ # Roda o pytest na sua pasta de testes
