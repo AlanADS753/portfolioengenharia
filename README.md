@@ -136,3 +136,24 @@ Resposta (Exemplo):
 
 404 Not Found se a tarefa não existir.
 
+7. Interface de Usuário (Frontend HTML)
+Uma interface de usuário simples foi desenvolvida em HTML, CSS (utilizando Tailwind CSS via CDN) e JavaScript puro para permitir a interação direta com a API Flask do Gerenciador de Tarefas. Este frontend atua como um cliente básico para todas as operações CRUD (Criar, Ler, Atualizar, Deletar).
+
+7.1. Como Utilizar
+Certifique-se de que a API Flask está em execução: A interface HTML se comunica com o backend Python. Antes de usar o frontend, execute sua aplicação Flask conforme as instruções na seção "Instruções para Execução do Sistema":
+
+python app.py
+
+A API estará disponível em http://127.0.0.1:5000/.
+
+Abra o arquivo index.html no seu navegador web preferido. Você pode fazer isso arrastando o arquivo diretamente para a janela do navegador ou clicando duas vezes no arquivo no seu explorador de arquivos.
+
+7.2. Funcionalidades da Interface
+Criar Nova Tarefa: Um formulário dedicado permite inserir o título, descrição e status de uma nova tarefa.
+
+Listar Tarefas: Exibe todas as tarefas existentes em tempo real, com a opção de atualizar a lista manualmente.
+
+Atualizar Tarefa: Um formulário permite modificar o título, descrição e/ou status de uma tarefa existente, informando seu ID.
+
+Deletar Tarefa: Permite remover uma tarefa do sistema fornecendo o seu ID.
+
