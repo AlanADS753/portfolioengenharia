@@ -1,23 +1,25 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import json
 import os
 
 app = Flask(__name__)
-DATA_FILE = 'tasks.json' # Define o nome do arquivo de dados para persistência
+
+app.config['DATA_FILE'] = 'tasks.json' 
 
 # Função para carregar tarefas do arquivo
 def load_tasks():
     """
     Carrega as tarefas do arquivo JSON.
     Se o arquivo não existir ou estiver vazio/corrompido, retorna uma lista vazia.
+    Utiliza o caminho do arquivo definido em app.config['DATA_FILE'].
     """
-    if not os.path.exists(DATA_FILE):
+    data_file_path = app.config['DATA_FILE'] 
+    if not os.path.exists(data_file_path):
         return []
     try:
-        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+        with open(data_file_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     except json.JSONDecodeError:
-        # Retorna lista vazia se o arquivo estiver vazio ou contiver JSON inválido
         return []
     except Exception as e:
         print(f"Erro ao carregar tarefas: {e}")
@@ -25,10 +27,21 @@ def load_tasks():
 
 # Função para salvar tarefas no arquivo
 def save_tasks(tasks):
-    """Salva a lista de tarefas no arquivo JSON, formatando-o para leitura."""
-    with open(DATA_FILE, 'w', encoding='utf-8') as f:
-        # ensure_ascii=False permite que caracteres UTF-8 (como acentos) sejam salvos diretamente
+    """
+    Salva a lista de tarefas no arquivo JSON, formatando-o para leitura.
+    Utiliza o caminho do arquivo definido em app.config['DATA_FILE'].
+    """
+    data_file_path = app.config['DATA_FILE'] # Usa o DATA_FILE do app.config
+    with open(data_file_path, 'w', encoding='utf-8') as f:
         json.dump(tasks, f, indent=4, ensure_ascii=False)
+
+# Rota para servir a interface HTML (frontend)
+@app.route('/', methods=['GET'])
+def index():
+    """
+    Serve o arquivo HTML principal da interface de usuário.
+    """
+    return render_template('index.html')
 
 # Rota para criar uma nova tarefa (POST /tasks)
 @app.route('/tasks', methods=['POST'])
@@ -41,22 +54,18 @@ def create_task():
     tasks = load_tasks()
     data = request.json
 
-    # Validação básica: Título é obrigatório
     if not data or not data.get("titulo"):
         return jsonify({"message": "Título da tarefa é obrigatório"}), 400
 
-    # Gera um ID simples (incrementa o último ID ou começa do 1)
-    # Nota: Em sistemas reais, usaria UUIDs ou IDs gerados por banco de dados
     new_id = 1
     if tasks:
-        # Encontra o maior ID existente e adiciona 1
         new_id = max(task['id'] for task in tasks) + 1
 
     new_task = {
         "id": new_id,
         "titulo": data.get("titulo"),
         "descricao": data.get("descricao"),
-        "status": data.get("status", "A Fazer") # Define 'A Fazer' como status padrão
+        "status": data.get("status", "A Fazer")
     }
     tasks.append(new_task)
     save_tasks(tasks)
@@ -80,7 +89,6 @@ def get_task(task_id):
     Retorna a tarefa e status 200 OK, ou mensagem de erro e status 404 Not Found se não encontrada.
     """
     tasks = load_tasks()
-    # Usa a função next() para encontrar a tarefa, ou None se não houver correspondência
     task = next((t for t in tasks if t['id'] == task_id), None)
     if task:
         return jsonify(task), 200
@@ -103,7 +111,6 @@ def update_task(task_id):
     task_found = False
     for i, task in enumerate(tasks):
         if task['id'] == task_id:
-            # Atualiza apenas os campos que foram fornecidos na requisição JSON
             tasks[i]['titulo'] = data.get('titulo', task['titulo'])
             tasks[i]['descricao'] = data.get('descricao', task['descricao'])
             tasks[i]['status'] = data.get('status', task['status'])
@@ -122,14 +129,14 @@ def delete_task(task_id):
     """
     tasks = load_tasks()
     initial_len = len(tasks)
-    # Cria uma nova lista contendo todas as tarefas, exceto a que será deletada
     tasks = [t for t in tasks if t['id'] != task_id]
     
     if len(tasks) < initial_len:
-        return jsonify({"message": "Tarefa deletada com sucesso"}), 204 
+        save_tasks(tasks)
+        return jsonify({"message": "Tarefa deletada com sucesso"}), 204
     return jsonify({"message": "Tarefa não encontrada"}), 404
 
+
 if __name__ == '__main__':
-    
     app.run(debug=True)
 

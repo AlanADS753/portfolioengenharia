@@ -157,3 +157,52 @@ Atualizar Tarefa: Um formulário permite modificar o título, descrição e/ou s
 
 Deletar Tarefa: Permite remover uma tarefa do sistema fornecendo o seu ID.
 
+8. Testes Automatizados (tests/test_app.py)
+Para garantir a qualidade e o correto funcionamento da API, o projeto inclui um conjunto abrangente de testes automatizados. Estes testes, desenvolvidos com a biblioteca Pytest, verificam o comportamento esperado de cada rota CRUD do backend.
+
+8.1. Estrutura dos Testes
+Os testes estão organizados no arquivo tests/test_app.py e cobrem os seguintes cenários para cada operação:
+
+Criação de Tarefas (POST /tasks):
+
+Criação bem-sucedida de uma tarefa com todos os campos.
+
+Verificação do status padrão (A Fazer) quando o status não é fornecido.
+
+Tratamento de erros quando o título da tarefa está ausente.
+
+Listagem de Tarefas (GET /tasks):
+
+Comportamento ao listar tarefas quando a lista está vazia.
+
+Retorno correto de múltiplas tarefas criadas.
+
+Obtenção de Tarefa por ID (GET /tasks/<id>):
+
+Retorno de uma tarefa específica quando o ID existe.
+
+Tratamento de erro (404 Not Found) quando a tarefa não é encontrada.
+
+Atualização de Tarefas (PUT /tasks/<id>):
+
+Atualização bem-sucedida de todos os campos de uma tarefa.
+
+Atualização parcial de campos, garantindo que os campos não fornecidos permaneçam inalterados.
+
+Tratamento de erro (404 Not Found) quando a tarefa a ser atualizada não existe.
+
+Tratamento de erro (400 Bad Request) quando nenhum dado é fornecido para atualização.
+
+Exclusão de Tarefas (DELETE /tasks/<id>):
+
+Deleção bem-sucedida de uma tarefa, verificando se ela é removida da lista.
+
+Tratamento de erro (404 Not Found) ao tentar deletar uma tarefa que não existe.
+
+Tratamento de erro (404 Not Found) ao tentar deletar uma tarefa de uma lista vazia.
+
+8.2. Como Rodar os Testes
+Para executar os testes localmente, certifique-se de ter o pytest instalado (pip install pytest) e, na raiz do projeto, execute o comando:
+
+pytest tests/
+

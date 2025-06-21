@@ -1,0 +1,62 @@
+[
+    {
+        "id": 2,
+        "titulo": "Tarefa sem status",
+        "descricao": "Esta tarefa não especifica um status inicial.",
+        "status": "A Fazer"
+    },
+    {
+        "id": 3,
+        "titulo": "Tarefa Um",
+        "descricao": null,
+        "status": "A Fazer"
+    },
+    {
+        "id": 4,
+        "titulo": "Tarefa Dois",
+        "descricao": null,
+        "status": "Concluída"
+    },
+    {
+        "id": 5,
+        "titulo": "Tarefa para Buscar",
+        "descricao": "Detalhes específicos",
+        "status": "A Fazer"
+    },
+    {
+        "id": 6,
+        "titulo": "Outra Tarefa",
+        "descricao": null,
+        "status": "A Fazer"
+    },
+    {
+        "id": 7,
+        "titulo": "Tarefa Velha",
+        "descricao": "Descrição Antiga",
+        "status": "A Fazer"
+    },
+    {
+        "id": 8,
+        "titulo": "Tarefa Parcial",
+        "descricao": "Manter",
+        "status": "A Fazer"
+    },
+    {
+        "id": 9,
+        "titulo": "Tarefa para Atualizar",
+        "descricao": null,
+        "status": "A Fazer"
+    },
+    {
+        "id": 10,
+        "titulo": "Para Deletar 1",
+        "descricao": null,
+        "status": "A Fazer"
+    },
+    {
+        "id": 11,
+        "titulo": "Para Deletar 2",
+        "descricao": null,
+        "status": "A Fazer"
+    }
+]
