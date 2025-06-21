@@ -54,3 +54,85 @@ Representa as funcionalidades do sistema sob a perspectiva do usuário.
 Descreve a estrutura estática do sistema em termos de suas classes, atributos e seus relacionamentos.
 
 ![Diagrama de Classes](docs/diagrams/DiagramaClasse.png)
+
+6. Implementação Completa do CRUD (app.py)
+O arquivo app.py contém a lógica principal da API de gerenciamento de tarefas, implementando todas as operações CRUD (Create, Read, Update, Delete) de forma completa e persistente em um arquivo JSON.
+
+6.1. Funções de Suporte
+load_tasks(): Responsável por ler as tarefas existentes do arquivo tasks.json. Se o arquivo não existir ou estiver vazio/corrompido, retorna uma lista vazia. Isso garante que a aplicação sempre comece com um estado válido.
+
+save_tasks(tasks): Recebe a lista atual de tarefas e a escreve de volta no arquivo tasks.json. A formatação com indent=4 e ensure_ascii=False é utilizada para manter o arquivo legível e suportar caracteres especiais (acentos, etc.).
+
+6.2. Rotas da API (Endpoints)
+6.2.1. Criação de Tarefa (POST /tasks)
+Endpoint: /tasks
+
+Método: POST
+
+Descrição: Permite adicionar uma nova tarefa ao sistema. O ID da tarefa é gerado automaticamente, e o status padrão é "A Fazer" se não for fornecido na requisição.
+
+Requisição (JSON Body):
+
+{
+    "titulo": "Título da Tarefa",
+    "descricao": "Descrição detalhada da tarefa",
+    "status": "A Fazer" (opcional)
+}
+
+Resposta (Exemplo): 201 Created e a tarefa criada.
+
+6.2.2. Listar Todas as Tarefas (GET /tasks)
+Endpoint: /tasks
+
+Método: GET
+
+Descrição: Retorna uma lista contendo todas as tarefas salvas no sistema.
+
+Resposta (Exemplo): 200 OK e uma lista de tarefas.
+
+6.2.3. Obter Tarefa por ID (GET /tasks/<int:task_id>)
+Endpoint: /tasks/<int:task_id> (onde <int:task_id> é o ID numérico da tarefa)
+
+Método: GET
+
+Descrição: Busca e retorna os detalhes de uma tarefa específica usando seu ID.
+
+Resposta (Exemplo):
+
+200 OK e a tarefa encontrada.
+
+404 Not Found se a tarefa não existir.
+
+6.2.4. Atualizar Tarefa (PUT /tasks/<int:task_id>)
+Endpoint: /tasks/<int:task_id>
+
+Método: PUT
+
+Descrição: Atualiza os campos (titulo, descricao, status) de uma tarefa existente. Apenas os campos fornecidos na requisição serão atualizados, mantendo os demais inalterados.
+
+Requisição (JSON Body):
+
+{
+    "titulo": "Novo Título" (opcional),
+    "status": "Concluída" (opcional)
+}
+
+Resposta (Exemplo):
+
+200 OK e a tarefa atualizada.
+
+404 Not Found se a tarefa não existir.
+
+6.2.5. Excluir Tarefa (DELETE /tasks/<int:task_id>)
+Endpoint: /tasks/<int:task_id>
+
+Método: DELETE
+
+Descrição: Remove uma tarefa do sistema permanentemente, usando seu ID.
+
+Resposta (Exemplo):
+
+204 No Content (indica sucesso sem conteúdo para retornar).
+
+404 Not Found se a tarefa não existir.
+
